@@ -64,7 +64,32 @@ curso-automatizacion/
 
 ---
 
-## 3. Instalar `uv` (gestor de Python)
+## 3. Instalar Python 3.12+
+
+El curso usa Python 3.12 o superior. Verifica si ya lo tienes:
+
+```bash
+python --version
+```
+
+**Output esperado:** `Python 3.12.x` o superior (3.13 también funciona).
+
+### Si no tienes Python o tienes una versión menor a 3.12:
+
+1. Descarga el instalador desde https://www.python.org/downloads/
+2. **IMPORTANTE:** durante la instalación, marca la casilla **"Add Python to PATH"** (Windows).
+3. Verifica de nuevo:
+
+```bash
+python --version
+```
+
+> **Nota:** si en tu sistema el comando es `python3` en lugar de `python`, está bien.
+> `uv` usa cualquiera de los dos.
+
+---
+
+## 4. Instalar `uv` (gestor de dependencias)
 
 `uv` maneja las dependencias de Python por proyecto. Se instala una sola vez.
 
@@ -92,7 +117,7 @@ Si el comando no se reconoce, **cierra y vuelve a abrir la terminal** e intenta 
 
 ---
 
-## 4. Instalar las dependencias del laboratorio
+## 5. Instalar las dependencias del laboratorio
 
 Desde la raíz del repo clonado:
 
@@ -113,7 +138,7 @@ No toca nada más de tu sistema.
 
 ---
 
-## 5. Verificar que todo funciona
+## 6. Verificar que todo funciona
 
 ```bash
 uv run pytest -v
@@ -155,7 +180,7 @@ Si ves **25 passed** — tu entorno está listo.
 
 ---
 
-## 6. Instalar `task` (opcional)
+## 7. Instalar `task` (opcional)
 
 `task` es un atajo para no escribir comandos largos. No es obligatorio — cada ejercicio
 incluye el comando completo como alternativa.
@@ -171,7 +196,7 @@ Con `task` instalado, los comandos del curso se simplifican:
 
 ---
 
-## 7. Software adicional que necesitarás en sesiones futuras
+## 8. Software adicional que necesitarás en sesiones futuras
 
 No los instales todos ahora — solo tenlos en cuenta para cuando toque:
 

@@ -9,16 +9,17 @@
 
 ## ANTES DE CLASE — Checklist del instructor
 
-Haz esto **antes** de llegar al salón. No lo dejes para el momento de la clase.
+Haz esto **antes** de conectarte a la videollamada. No lo dejes para el momento de la clase.
 
 - [ ] Ejecuta `cd proyecto-integrador/design-lab && uv sync && uv run pytest -v` en tu máquina. Todo debe pasar.
 - [ ] Abre SauceDemo (https://www.saucedemo.com) y verifica que funciona.
-- [ ] Ten proyectado en pantalla: este documento, un navegador abierto con SauceDemo, y una terminal.
-- [ ] Verifica que los estudiantes tienen `uv` instalado (puedes enviar instrucciones por correo/chat antes de clase).
+- [ ] Ten listo para compartir pantalla: este documento, un navegador abierto con SauceDemo, una terminal, y una pizarra virtual (Miro, Jamboard, o la pizarra integrada de Zoom/Teams).
+- [ ] Verifica que los estudiantes tienen `uv` instalado (envía el SETUP_ESTUDIANTES.md por correo/chat al menos 48h antes).
+- [ ] **Configuración de la videollamada:** habilita el chat, ten a la mano el link de breakout rooms, y pide que todos tengan cámara encendida si es posible.
 
 ---
 
-## 🗺️ MAPA DE LA SESIÓN (proyéctalo al inicio)
+## 🗺️ MAPA DE LA SESIÓN (comparte pantalla al inicio)
 
 ```
 Bloque A (55 min) — Yo explico, tú observas
@@ -115,7 +116,7 @@ Producción se rompe con un pedido de $1,000.
 ¿Por qué?
 ```
 
-**Diseño:** Fondo oscuro, texto blanco grande. La pregunta en amarillo o naranja. Pausa dramática — dejar que los estudiantes respondan antes de cambiar de slide.
+**Diseño:** Fondo oscuro, texto blanco grande. La pregunta en amarillo o naranja. Pausa dramática — pide que escriban su respuesta en el chat antes de cambiar de slide.
 
 ---
 
@@ -546,7 +547,7 @@ La matriz crece: TC-LOG-* pasan de DISEÑO → PASS
 
 ### ACCIONES DEL INSTRUCTOR:
 
-1. **[SLIDE 1]** Proyecta la portada mientras la gente se acomoda. No digas nada todavía.
+1. **[SLIDE 1]** Comparte pantalla con la portada mientras la gente se conecta. No digas nada todavía.
 2. **[SLIDE 2]** Cuando estés listo, cambia al objetivo. Léelo en voz alta (30 segundos). No lo expliques — solo léelo.
 3. **[SLIDE 3]** Cambia al problema. Lee el escenario en voz alta, despacio:
 
@@ -556,8 +557,8 @@ La matriz crece: TC-LOG-* pasan de DISEÑO → PASS
 > Y aun así, producción se rompe cuando un cliente hace un pedido de exactamente $1,000.
 > ¿Cómo es posible?"
 
-4. **PAUSA DE 10 SEGUNDOS.** No hables. Deja que piensen. Alguien va a levantar la mano o decir algo como "porque no probaron ese valor".
-5. Si nadie responde en 15 segundos, di: "¿Nadie? La respuesta es simple: porque nadie pensó en probar exactamente $1,000. El límite."
+4. **PAUSA DE 10 SEGUNDOS.** No hables. Deja que piensen. Alguien va a escribir en el chat o usar la reacción de levantar mano. Lee lo que escriben en voz alta.
+5. Si nadie escribe en 15 segundos, di: "¿Nadie? La respuesta es simple: porque nadie pensó en probar exactamente $1,000. El límite."
 
 6. **[SLIDE 4]** Cambia a las 3 preguntas. Lee cada una:
 
@@ -572,7 +573,7 @@ La matriz crece: TC-LOG-* pasan de DISEÑO → PASS
 
 ### CHECKPOINT:
 - Los estudiantes deberían tener las 3 preguntas anotadas (en papel o mentalmente).
-- No deberías ver a nadie con la terminal abierta todavía.
+- Pide que escriban "✅" en el chat si tienen las 3 preguntas claras.
 
 ---
 
@@ -589,14 +590,14 @@ La matriz crece: TC-LOG-* pasan de DISEÑO → PASS
 > Todos los valores DENTRO del rango producen el mismo resultado.
 > Basta con probar UNO por grupo."
 
-**ACCIÓN:** Señala el diagrama de la slide (los 3 recuadros).
+**ACCIÓN:** Usa el cursor/laser pointer de tu herramienta de videollamada para señalar el diagrama (los 3 recuadros).
 
 **GUION:**
 > "Dividimos los valores en grupos — llamados particiones.
 > Los valores dentro de cada grupo se comportan igual.
 > Entonces probamos UN representante de cada grupo."
 
-**ACCIÓN:** Señala el texto rojo al pie de la slide.
+**ACCIÓN:** Señala con el cursor el texto rojo al pie de la slide.
 
 **GUION (énfasis):**
 > "Regla que no se olvida: siempre incluir las particiones INVÁLIDAS.
@@ -614,7 +615,7 @@ La matriz crece: TC-LOG-* pasan de DISEÑO → PASS
 > menor-que cuando debería ser menor-o-igual. Por eso probamos el valor EXACTO
 > del límite y sus vecinos inmediatos."
 
-**ACCIÓN:** Señala el diagrama de la línea numérica.
+**ACCIÓN:** Señala con el cursor el diagrama de la línea numérica.
 
 **GUION:**
 > "Para un rango de 18 a 65, probamos 4 valores: 17, 18, 65, 66.
@@ -640,14 +641,14 @@ La matriz crece: TC-LOG-* pasan de DISEÑO → PASS
 > VARIAS cosas a la vez — hacemos una tabla con TODAS las combinaciones.
 > 3 condiciones sí/no = 2 al cubo = 8 reglas."
 
-**ACCIÓN:** Señala la tabla de 8 filas en la slide.
+**ACCIÓN:** Señala con el cursor la tabla de 8 filas en la slide.
 
 **GUION (recorre la tabla de arriba a abajo):**
 > "R1: no premium, bajo monto, sin cupón → 0%.
 > R2: no premium, bajo monto, con cupón → 5%.
 > ... y así hasta R8."
 
-**ACCIÓN:** Detente en R8. Señálala.
+**ACCIÓN:** Detente en R8. Señálala con el cursor.
 
 **GUION (énfasis, más despacio):**
 > "R8 es la regla más importante de toda la tabla. Miren:
@@ -668,7 +669,7 @@ La matriz crece: TC-LOG-* pasan de DISEÑO → PASS
 > 3 por 3 por 2 por 3 = 54 combinaciones.
 > Si cada test tarda 30 segundos, son 27 minutos solo para cross-browser."
 
-**ACCIÓN:** Señala el lado derecho de la slide.
+**ACCIÓN:** Señala con el cursor el lado derecho de la slide.
 
 **GUION:**
 > "Pairwise dice: la mayoría de defectos son causados por la interacción
@@ -676,7 +677,7 @@ La matriz crece: TC-LOG-* pasan de DISEÑO → PASS
 > Solo necesitas que cada PAR de valores aparezca junto al menos una vez.
 > Con eso, 54 se reduce a 10. 80% menos tests."
 
-**ACCIÓN:** Señala la advertencia amarilla al pie de la slide.
+**ACCIÓN:** Señala con el cursor la advertencia amarilla al pie de la slide.
 
 **GUION (cambia el tono a serio):**
 > "Pero cuidado. La herramienta que usamos hoy tiene un bug conocido.
@@ -699,14 +700,14 @@ La matriz crece: TC-LOG-* pasan de DISEÑO → PASS
 > "Trazabilidad es poder rastrear desde un fallo hasta el requerimiento en segundos.
 > Usamos 3 identificadores: REQ para requerimiento, TC para test case, DEF para defecto."
 
-**ACCIÓN:** Señala el diagrama REQ → TC → DEF.
+**ACCIÓN:** Señala con el cursor el diagrama REQ → TC → DEF.
 
 **GUION:**
 > "Un requerimiento tiene uno o muchos test cases.
 > Un test case puede encontrar cero o muchos defectos.
 > Todo está conectado con IDs."
 
-**ACCIÓN:** Señala las 2 preguntas debajo del diagrama.
+**ACCIÓN:** Señala con el cursor las 2 preguntas debajo del diagrama.
 
 **GUION:**
 > "La matriz responde 2 preguntas:
@@ -729,7 +730,7 @@ La matriz crece: TC-LOG-* pasan de DISEÑO → PASS
 
 **PASO 1 — Abrir el código (3 min):**
 
-**ACCIÓN:** Abre `design_lab/discount.py` en tu editor, proyectado en pantalla.
+**ACCIÓN:** Abre `design_lab/discount.py` en tu editor, compartido en pantalla.
 
 **GUION:**
 > "Esta función calcula el descuento de un pedido.
@@ -749,14 +750,14 @@ La matriz crece: TC-LOG-* pasan de DISEÑO → PASS
 
 **PASO 2 — Derivar EP en vivo (5 min):**
 
-**ACCIÓN:** Abre la pizarra (o un documento en blanco proyectado).
+**ACCIÓN:** Abre la pizarra virtual (Miro, Jamboard, o pizarra de Zoom/Teams). Comparte esa ventana.
 
 **GUION:**
 > "Vamos a derivar casos desde los requerimientos. Empiezo con REQ-DSC-005:
 > el pedido debe estar entre 0 exclusivo y 10,000 inclusivo.
 > De ahí salen 3 particiones:"
 
-**ACCIÓN:** Escribe en pizarra:
+**ACCIÓN:** Escribe en la pizarra virtual:
 ```
 EP para order_total (REQ-DSC-005):
   Inválida baja:  ≤ 0        → ej: 0, -50
@@ -771,7 +772,7 @@ EP para order_total (REQ-DSC-005):
 
 **PASO 3 — Derivar BVA en vivo (3 min):**
 
-**ACCIÓN:** Escribe debajo en la pizarra:
+**ACCIÓN:** Escribe debajo en la pizarra virtual:
 ```
 BVA para order_total (REQ-DSC-005):
   0       → inválido (frontera exclusiva, NO pasa)
@@ -793,7 +794,7 @@ BVA para umbral volumen (REQ-DSC-002):
 
 **PASO 4 — Derivar tabla de decisión en vivo (3 min):**
 
-**ACCIÓN:** Escribe en pizarra:
+**ACCIÓN:** Escribe en la pizarra virtual:
 ```
 Tabla de decisión (3 condiciones):
   ¿Premium?    Sí / No
@@ -824,7 +825,7 @@ Tabla de decisión (3 condiciones):
 
 ## A.5 Resumen y preguntas (minutos 50-55)
 
-**ACCIÓN:** Sin slide. Habla directo al grupo.
+**ACCIÓN:** Sin compartir pantalla. Habla directo a cámara.
 
 **GUION:**
 > "Resumen rápido: aprendimos 4 técnicas — EP, BVA, tabla de decisión y pairwise.
@@ -832,7 +833,7 @@ Tabla de decisión (3 condiciones):
 > En el Bloque B van a ejecutar todo esto en código real.
 > Pero antes, 3 preguntas rápidas."
 
-**ACCIÓN:** Haz las preguntas al grupo. Espera respuesta.
+**ACCIÓN:** Haz las preguntas al grupo. Pide que respondan en el chat.
 
 1. **Pregunta:** "¿Cuántos valores de BVA necesito para un rango de 0 a 10,000?"
    **Respuesta esperada:** "4: los dos límites y sus vecinos."
@@ -856,6 +857,7 @@ Tabla de decisión (3 condiciones):
 
 > **Regla de oro del Bloque B:** los estudiantes siguen tu ritmo. Tú dictas el paso, ellos ejecutan.
 > Nunca digas "hagan el ejercicio". Di: "abran X archivo, línea Y, lean Z".
+> **Tip virtual:** después de cada comando, pide que escriban "✅" o "❌" en el chat para confirmar que avanzan.
 
 ---
 
@@ -863,14 +865,14 @@ Tabla de decisión (3 condiciones):
 
 ### ACCIONES DEL INSTRUCTOR:
 
-1. **[SLIDE 11]** Proyecta la estructura de carpetas. No cambies de slide todavía.
+1. **[SLIDE 11]** Comparte pantalla con la estructura de carpetas. No cambies de slide todavía.
 
 2. **GUION (abriendo la sesión):**
 > "Bienvenidos al Bloque B. Ahora sí, manos al teclado.
 > Voy a guiarlos paso a paso. Sigan mi ritmo.
-> Si algo falla, levanten la mano — yo paso por su lugar."
+> Si algo falla, escriban 'ERROR' en el chat y les abro un breakout room para ayudarlos uno-a-uno."
 
-3. **ACCIÓN:** Cambia a **[SLIDE 12]**. Señala cada carpeta del árbol:
+3. **ACCIÓN:** Cambia a **[SLIDE 12]**. Señala con el cursor cada carpeta del árbol:
 
 > **GUION (señalando cada línea):**
 > "Miren la estructura:
@@ -887,25 +889,25 @@ Tabla de decisión (3 condiciones):
 > **GUION:**
 > "Abran su terminal. Naveguen a la carpeta del repo. Ejecuten exactamente esto:"
 
-**ACCIÓN:** Escribe tú primero en tu terminal (proyectada), luego espera:
+**ACCIÓN:** Escribe tú primero en tu terminal (compartida en pantalla), luego espera:
 ```bash
 cd proyecto-integrador/design-lab
 uv sync
 ```
 
-5. **PAUSA:** Camina por el salón. Mira las pantallas.
+5. **PAUSA:** Monitorea el chat. Pide que escriban "✅" cuando tengan `uv sync` completado.
 
-> **⚠️ TIEMPO:** Esto toma 2-3 minutos. Si a los 4 min no todos terminan, di:
-> "Si aún está descargando, no se preocupen. Levanten la mano y yo paso."
+> **⚠️ TIEMPO:** Esto toma 2-3 minutos. Si a los 4 min no todos confirman en el chat, di:
+> "Si aún está descargando, no se preocupen. Escriban 'AYUDA' en el chat y les abro un breakout room."
 
-6. **ACCIÓN:** Cuando ~80% tenga `uv sync` listo, proyecta el output esperado:
+6. **ACCIÓN:** Cuando ~80% tenga `uv sync` listo, comparte en pantalla el output esperado:
 ```
 Resolved N packages in Xms
 Installed pytest-8.x.x pyyaml-6.x.x allpairspy-2.x.x
 ```
 
 > **GUION:**
-> "Deberían ver algo así. 3 paquetes instalados. Si dice 'error', levanten la mano.
+> "Deberían ver algo así. 3 paquetes instalados. Si dice 'error', escriban en el chat qué mensaje les aparece.
 > Las causas más comunes: no tener uv instalado, o estar en la carpeta equivocada."
 
 7. **ACCIÓN:** Cuando todos estén listos, dicta el siguiente comando:
@@ -915,7 +917,7 @@ uv run pytest -v
 
 8. **PAUSA:** Espera 10 segundos mientras corren los tests.
 
-9. **ACCIÓN:** Proyecta tu propia terminal con el output completo (25 passed).
+9. **ACCIÓN:** Comparte tu propia terminal con el output completo (25 passed).
 
 > **GUION:**
 > "Cuenten conmigo: 25 tests. Todos en verde.
@@ -924,9 +926,9 @@ uv run pytest -v
 > Así es como se conectan los tests con los requerimientos."
 
 ### CHECKPOINT:
-- Todos tienen 25 tests en verde.
+- Todos tienen 25 tests en verde (confirman con "✅" en el chat).
 - Nadie está atascado en `uv sync`.
-- Si alguien sigue con problemas, asígnale un compañero como "pair" mientras continúas.
+- Si alguien sigue con problemas, crea un breakout room con un compañero como "pair" mientras continúas. Si son muchos, dedica 5 minutos extra y comparte pantalla con ellos.
 
 ---
 
@@ -940,7 +942,7 @@ uv run pytest -v
 1. **ACCIÓN:** Di en voz alta:
 > "Abran `tests/test_equivalence_boundary.py`. No ejecuten nada todavía. Solo lean."
 
-2. **ACCIÓN:** Proyecta tu editor con el archivo abierto. Haz scroll a la docstring.
+2. **ACCIÓN:** Comparte tu editor en pantalla con el archivo abierto. Haz scroll a la docstring.
 
 > **GUION (leyendo la docstring en voz alta):**
 > "La docstring dice: este archivo implementa dos técnicas.
@@ -948,14 +950,14 @@ uv run pytest -v
 > BVA — valores límite: probamos las fronteras donde viven los bugs.
 > Eso ya lo sabemos del Bloque A. Ahora veámoslo en código."
 
-3. **ACCIÓN:** Haz scroll al **BLOQUE 1: VALID_PARTITIONS**. Señala cada fila:
+3. **ACCIÓN:** Haz scroll al **BLOQUE 1: VALID_PARTITIONS**. Señala con el cursor cada fila:
 
 > **GUION:**
 > "Miren VALID_PARTITIONS. 4 filas. Cada fila es un caso de prueba.
 > Fíjense en el `id=`: TC-DSC-EP-001, 002, 003, 004.
 > Esos son los IDs de trazabilidad. Si un test falla, sé exactamente qué requerimiento probar."
 
-4. **ACCIÓN:** Señala los valores de cada fila:
+4. **ACCIÓN:** Señala con el cursor los valores de cada fila:
 
 > **GUION:**
 > "EP-001: standard, $500, sin cupón → descuento base 0%.
@@ -979,7 +981,7 @@ uv run pytest -v
 > Si usáramos premium, no sabríamos si el resultado es por el tipo de cliente o por el monto.
 > En BVA, una sola variable cambia a la vez."
 
-7. **ACCIÓN:** Señala cada fila de BOUNDARIES:
+7. **ACCIÓN:** Señala con el cursor cada fila de BOUNDARIES:
 
 > **GUION:**
 > "BVA-001: $0.01 — el mínimo válido. Primer valor que pasa.
@@ -1000,7 +1002,7 @@ uv run pytest -v
 > Si no lo lanza, el test falla. Y eso es un bug."
 
 ### CHECKPOINT (min 18):
-- Pregunta rápida al grupo: "¿Cuántos tests de EP+BVA tenemos en total?"
+- Pregunta rápida al grupo (responder en chat): "¿Cuántos tests de EP+BVA tenemos en total?"
 - Respuesta: "12. 4 válidas + 4 límites + 4 inválidas."
 
 ---
@@ -1010,14 +1012,14 @@ uv run pytest -v
 1. **ACCIÓN:** Di a los estudiantes:
 > "Ahora sí, ejecuten. Pero solo los tests de EP y BVA, no todos."
 
-**ACCIÓN:** Escribe en tu terminal (proyectada):
+**ACCIÓN:** Escribe en tu terminal (compartida en pantalla):
 ```bash
 uv run pytest -v tests/test_equivalence_boundary.py
 ```
 
 2. **PAUSA:** Espera 5 segundos.
 
-3. **ACCIÓN:** Cuando la mayoría termine, proyecta el output:
+3. **ACCIÓN:** Cuando la mayoría confirme en el chat, comparte el output:
 ```
 tests/test_equivalence_boundary.py::test_valid_partitions[TC-DSC-EP-001-standard-base] PASSED
 tests/test_equivalence_boundary.py::test_valid_partitions[TC-DSC-EP-002-premium-base] PASSED
@@ -1054,7 +1056,7 @@ tests/test_equivalence_boundary.py::test_valid_partitions[TC-DSC-EP-002-premium-
 1. **ACCIÓN:** Di en voz alta:
 > "Abran `data/decision_table.yaml`. No el test — primero los datos."
 
-2. **ACCIÓN:** Proyecta tu editor con el YAML abierto.
+2. **ACCIÓN:** Comparte tu editor en pantalla con el YAML abierto.
 
 > **GUION:**
 > "Este archivo tiene las 8 reglas de la tabla de decisión.
@@ -1063,7 +1065,7 @@ tests/test_equivalence_boundary.py::test_valid_partitions[TC-DSC-EP-002-premium-
 
 3. **PAUSA:** 30 segundos para que lean.
 
-4. **ACCIÓN:** Haz scroll hasta DT-R8. Señálala.
+4. **ACCIÓN:** Haz scroll hasta DT-R8. Señálala con el cursor.
 
 > **GUION:**
 > "DT-R8: premium sí, volumen sí, cupón sí.
@@ -1091,14 +1093,14 @@ tests/test_equivalence_boundary.py::test_valid_partitions[TC-DSC-EP-002-premium-
 1. **ACCIÓN:** Di a los estudiantes:
 > "Ahora abran `tests/test_decision_table.py`."
 
-2. **ACCIÓN:** Proyecta tu editor. Señala la función `load_rules()`.
+2. **ACCIÓN:** Comparte tu editor en pantalla. Señala con el cursor la función `load_rules()`.
 
 > **GUION:**
 > "Miren `load_rules()`. Esta función lee el YAML y lo convierte en `pytest.param`.
 > El test no tiene NINGÚN dato hardcodeado.
 > Todo viene del YAML. Si agrego una regla al YAML, automáticamente se prueba."
 
-3. **ACCIÓN:** Haz scroll al test `test_decision_table_is_complete`. Señálalo.
+3. **ACCIÓN:** Haz scroll al test `test_decision_table_is_complete`. Señálalo con el cursor.
 
 > **GUION (énfasis):**
 > "Este test es especial. Se llama test guardrail.
@@ -1129,7 +1131,7 @@ uv run pytest -v tests/test_decision_table.py
 uv run pytest -v tests/test_decision_table.py::test_decision_table_is_complete
 ```
 
-6. **ACCIÓN:** Proyecta el FAILED en pantalla grande.
+6. **ACCIÓN:** Comparte el FAILED en pantalla (asegúrate de que se vea bien en la videollamada).
 
 > **GUION:**
 > "Falló. Dice: 'Faltan reglas: hay 7 de 8 combinaciones esperadas'.
@@ -1159,7 +1161,7 @@ uv run pytest -v tests/test_decision_table.py::test_decision_table_is_complete
 
 2. **PAUSA:** 20 segundos de silencio.
 
-3. **ACCIÓN:** Proyecta tu editor con el archivo.
+3. **ACCIÓN:** Comparte tu editor en pantalla con el archivo.
 
 > **GUION:**
 > "Este archivo prueba la matriz cross-browser:
@@ -1190,7 +1192,7 @@ uv run pytest -v tests/test_pairwise.py
 1. **ACCIÓN:** Di al grupo:
 > "Ahora abran `design_lab/pairwise_matrix.py`. Vamos a ver cómo se genera la matriz."
 
-2. **ACCIÓN:** Proyecta tu editor. Señala el patrón de 3 pasos:
+2. **ACCIÓN:** Comparte tu editor en pantalla. Señala con el cursor el patrón de 3 pasos:
 
 > **GUION:**
 > "El patrón es: generar, auditar, complementar.
@@ -1198,7 +1200,7 @@ uv run pytest -v tests/test_pairwise.py
 > Paso 2: nuestra función `missing_pairs` revisa si quedaron huecos.
 > Paso 3: si hay huecos, agregamos filas extra manualmente."
 
-3. **ACCIÓN:** Señala el test `test_pairwise_covers_every_achievable_pair`.
+3. **ACCIÓN:** Señala con el cursor el test `test_pairwise_covers_every_achievable_pair`.
 
 > **GUION (cambia el tono a serio):**
 > "Este test es la lección más importante de toda la sesión.
@@ -1237,9 +1239,9 @@ uv run pytest -v tests/test_pairwise.py
 
 # BLOQUE C (60 min) — Tú trabajas solo, yo superviso
 
-> **Regla de oro del Bloque C:** los estudiantes trabajan solos. Tú caminas por el salón,
-> respondes dudas uno-a-uno, y detectas problemas comunes para discutirlos al final.
-> NO proyectes tu pantalla durante C.1 y C.2 — ellos producen, tú observas.
+> **Regla de oro del Bloque C:** los estudiantes trabajan solos. Tú monitorean el chat,
+> responden dudas uno-a-uno (por mensaje privado o breakout room), y detectas problemas comunes para discutirlos al final.
+> Deja de compartir pantalla durante C.1 y C.2 — ellos producen, tú observas el chat.
 
 ---
 
@@ -1249,7 +1251,7 @@ uv run pytest -v tests/test_pairwise.py
 
 1. **[SLIDE 13]**
 
-2. **ACCIÓN:** Proyecta SauceDemo en pantalla grande.
+2. **ACCIÓN:** Comparte pantalla con SauceDemo abierto.
 
 > **GUION:**
 > "Bloque C. Ahora ustedes trabajan solos.
@@ -1257,7 +1259,7 @@ uv run pytest -v tests/test_pairwise.py
 > Tienen 3 minutos para explorar. Prueben hacer login con diferentes usuarios.
 > Anoten lo que observan: qué funciona, qué no, qué mensajes aparecen."
 
-3. **ACCIÓN:** Escribe en pizarra los 4 usuarios (para que los tengan a la vista):
+3. **ACCIÓN:** Comparte la pizarra virtual y escribe los 4 usuarios (para que los tengan a la vista):
 ```
 standard_user          / secret_sauce  → login exitoso
 locked_out_user        / secret_sauce  → mensaje de error
@@ -1265,7 +1267,7 @@ problem_user           / secret_sauce  → login con glitches
 performance_glitch_user/ secret_sauce  → login lento
 ```
 
-4. **PAUSA:** 3 minutos de exploración libre. Camina por el salón.
+4. **PAUSA:** 3 minutos de exploración libre. Monitorea el chat — pueden escribir observaciones en tiempo real.
 
 > **⚠️ SI ALGUIEN PREGUNTA:** "¿Qué es un glitch?" → "Una falla visual. Por ejemplo,
 > una imagen que no carga o un texto cortado. Anótalo como observación."
@@ -1274,7 +1276,7 @@ performance_glitch_user/ secret_sauce  → login lento
 
 ### PARTE 2 — Explicar la tarea (min 5-8)
 
-1. **ACCIÓN:** Vuelve a tu pantalla. Proyecta la matriz `matriz-trazabilidad.csv` abierta.
+1. **ACCIÓN:** Vuelve a compartir tu pantalla. Comparte la matriz `matriz-trazabilidad.csv` abierta.
 
 > **GUION:**
 > "Ya exploraron. Ahora vamos a convertir lo que observaron en casos de prueba trazables.
@@ -1282,7 +1284,7 @@ performance_glitch_user/ secret_sauce  → login lento
 > Van a ver que ya hay 3 filas marcadas como PENDIENTE: REQ-LOG-001, 002 y 003.
 > Su trabajo: completar esas filas con los casos de prueba que diseñen."
 
-2. **ACCIÓN:** Proyecta una fila de ejemplo de la matriz. Señala cada columna:
+2. **ACCIÓN:** Comparte una fila de ejemplo de la matriz. Señala con el cursor cada columna:
 
 > **GUION (columna por columna):**
 > "req_id → Ejemplo: REQ-LOG-001. Es el ID del requerimiento.
@@ -1301,19 +1303,21 @@ performance_glitch_user/ secret_sauce  → login lento
 > "Tienen 20 minutos. Trabajen solos.
 > Mínimo esperado: cada REQ-LOG con al menos un TC,
 > al menos una partición inválida, y una tabla de decisión.
-> Yo paso por sus lugares. Si tienen duda, levanten la mano."
+> Estoy en el chat. Si tienen duda, escriban — o envíenme un mensaje privado para ayuda uno-a-uno.
+> Si necesitan que vea su pantalla, pidan un breakout room conmigo."
 
 ---
 
 ### PARTE 3 — Trabajo individual (min 8-25)
 
-1. **ACCIÓN:** Los estudiantes trabajan. Tú caminas por el salón.
+1. **ACCIÓN:** Los estudiantes trabajan. Tú monitorean el chat activamente.
 
-> **⚠️ NO te quedes sentado.** Camina. Mira pantallas. Detecta patrones.
+> **⚠️ NO te quedes en silencio.** Revisa el chat cada 2-3 minutos. Si alguien pide ayuda, responde por mensaje privado
+> o abre un breakout room rápido (máx 3 min). Si ves la misma pregunta repetida, interrumpe al grupo y aclara en voz alta.
 
 2. **GUÍA INTERNA (para ti, NO se los digas directamente):**
 
-   Esto es lo que los estudiantes deberían producir. Si alguien se atasca, oriéntalo con preguntas, no con respuestas:
+   Esto es lo que los estudiantes deberían producir. Si alguien se atasca en el chat, oriéntalo con preguntas, no con respuestas:
 
    **Requerimientos observables:**
    - `REQ-LOG-001`: Credenciales válidas redirigen a `/inventory.html`
@@ -1331,7 +1335,7 @@ performance_glitch_user/ secret_sauce  → login lento
    - ¿Usuario existe? / ¿Contraseña correcta? / ¿Usuario bloqueado?
    - 2³ = 8 reglas, pero algunas son imposibles (usuario bloqueado + contraseña incorrecta puede no ser distinguible de usuario inexistente)
 
-3. **ACCIÓN (a los 15 minutos):** Detente al frente y di en voz alta:
+3. **ACCIÓN (a los 15 minutos):** Interrumpe al grupo (todos deberían estar con micrófono apagado, habla en voz alta):
 
 > **GUION:**
 > "Atención. Faltan 10 minutos. Checklist de verificación:
@@ -1344,8 +1348,8 @@ performance_glitch_user/ secret_sauce  → login lento
 4. **PAUSA:** 10 minutos más de trabajo.
 
 ### CHECKPOINT (min 25):
-- Pide que levanten la mano los que tienen los 3 REQ-LOG con al menos un TC cada uno.
-- Si menos del 50% levanta la mano, da 3 minutos extra y reduce C.2.
+- Pide que escriban "✅" en el chat los que tienen los 3 REQ-LOG con al menos un TC cada uno.
+- Si menos del 50% confirma, da 3 minutos extra y reduce C.2.
 
 ---
 
@@ -1358,7 +1362,7 @@ performance_glitch_user/ secret_sauce  → login lento
 
 1. **[SLIDE 14]**
 
-2. **ACCIÓN:** Escribe en pizarra (no cambies de slide, usa la pizarra para que lo抄ien):
+2. **ACCIÓN:** Comparte la pizarra virtual y escribe (no cambies de slide, usa la pizarra para que lo copien):
 ```
 navegador:   {chromium, firefox, webkit}
 pantalla:    {mobile, tablet, desktop}
@@ -1394,7 +1398,7 @@ Total combinaciones: 3 × 3 × 2 × 2 = 36
 
 ### PARTE 2 — Trabajo individual (min 28-44)
 
-1. **ACCIÓN:** Los estudiantes trabajan. Tú caminas por el salón.
+1. **ACCIÓN:** Los estudiantes trabajan. Tú monitorean el chat.
 
 > **⚠️ ESTE ES EL RETO MÁS DIFÍCIL DE LA SESIÓN.**
 > Muchos estudiantes se van a atascar en cómo escribir la restricción.
@@ -1404,7 +1408,7 @@ Total combinaciones: 3 × 3 × 2 × 2 = 36
    - Si no saben verificar la restricción en el test: "Piensen: si recorro cada fila de la matriz, ¿cómo verifico que ninguna tenga admin Y mobile juntos?"
    - Si no saben verificar cobertura de pares: "Miren el test `test_pairwise_covers_every_achievable_pair` del laboratorio. Es el mismo patrón."
 
-3. **ACCIÓN (a los 15 minutos, min 43):** Detente al frente:
+3. **ACCIÓN (a los 15 minutos, min 43):** Interrumpe al grupo:
 
 > **GUION:**
 > "Un minuto para cerrar. Los que no terminaron, anoten dónde se quedaron.
@@ -1448,10 +1452,10 @@ Total combinaciones: 3 × 3 × 2 × 2 = 36
 
 1. **[SLIDE 15]**
 
-2. **ACCIÓN:** Proyecta la tabla de errores. No la leas completa — ve error por error.
+2. **ACCIÓN:** Comparte pantalla con la tabla de errores. No la leas completa — ve error por error.
 
-> **⚠️ DINÁMICA:** Para cada error, primero pregunta al grupo: "¿Alguien hizo esto hoy?"
-> Que levanten la mano. Luego explica la práctica correcta. No juzgues — normaliza el error.
+> **⚠️ DINÁMICA VIRTUAL:** Para cada error, lanza una encuesta rápida (poll) de Zoom/Teams:
+> "¿Hiciste esto hoy?" — Sí / No. Luego explica la práctica correcta. Los polls son anónimos, así que nadie se siente juzgado.
 
 **Error 1:** "Probar solo el camino feliz con valores arbitrarios."
 
@@ -1506,10 +1510,10 @@ Total combinaciones: 3 × 3 × 2 × 2 = 36
 
 1. **[SLIDE 16]**
 
-2. **ACCIÓN:** Proyecta el checklist. Pide que cada estudiante verifique en su máquina:
+2. **ACCIÓN:** Comparte pantalla con el checklist. Pide que cada estudiante verifique en su máquina:
 
 > **GUION:**
-> "Antes de cerrar, verifiquen esto en su máquina. Si algo no está, levanten la mano."
+> "Antes de cerrar, verifiquen esto en su máquina. Si algo no está, escriban en el chat."
 
 **ACCIÓN:** Lee cada punto en voz alta y da 10 segundos para verificar:
 
@@ -1522,13 +1526,13 @@ Total combinaciones: 3 × 3 × 2 × 2 = 36
 
 > **GUION:**
 > "¿Quién puede explicar por qué DT-R8 no existiría sin la tabla de decisión?
-> Levanten la mano."
+> Escriban en el chat o activen su micrófono."
 
-> **Si alguien levanta la mano, pídele que lo diga en voz alta.**
+> **Si alguien activa el micrófono o escribe una respuesta buena, pídele que lo explique en voz alta al grupo.**
 > Respuesta esperada: "Porque premium + volumen + cupón suma 20%, pero el tope es 15%.
 > Sin la tabla completa, nadie piensa en probar la combinación de los 3 juntos."
 >
-> **Si nadie levanta la mano, dilo tú:**
+> **Si nadie responde en el chat ni activa micrófono, dilo tú:**
 > "Premium más volumen más cupón suma 20%. Pero el tope es 15%.
 > Sin construir la tabla completa con las 8 reglas, nadie piensa en probar ese caso.
 > Y ese caso es un bug que llega a producción."
@@ -1539,7 +1543,7 @@ Total combinaciones: 3 × 3 × 2 × 2 = 36
 
 1. **[SLIDE 17]**
 
-2. **ACCIÓN:** Proyecta el preview de la Sesión 2.
+2. **ACCIÓN:** Comparte pantalla con el preview de la Sesión 2.
 
 > **GUION (cierre energético):**
 > "Hoy aprendieron a diseñar tests antes de escribir código.
@@ -1559,12 +1563,12 @@ Total combinaciones: 3 × 3 × 2 × 2 = 36
 > ```
 > Yo revisaré sus repos después de clase. No necesitan enviar nada por correo."
 
-4. **ACCIÓN:** Espera a que todos hagan commit. Si alguien tiene problemas con git, ayúdalo rápidamente.
+4. **ACCIÓN:** Espera a que todos confirmen con "✅" en el chat que hicieron commit y push. Si alguien tiene problemas con git, abre un breakout room rápido para ayudarlo.
 
 ### CHECKPOINT FINAL:
-- Todos hicieron commit y push.
+- Todos confirmaron commit y push en el chat.
 - La matriz tiene los REQ-LOG-* completados.
-- Nadie se va con dudas sin resolver (o con plan para resolverlas antes de S2).
+- Nadie se desconecta con dudas sin resolver (o con plan para resolverlas antes de S2 por chat/correo).
 
 ---
 

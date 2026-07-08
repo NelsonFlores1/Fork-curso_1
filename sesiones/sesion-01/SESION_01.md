@@ -1,3 +1,626 @@
+# GUÍA DEL INSTRUCTOR — Sesión 1: Diseño Técnico de Pruebas
+
+> **Duración:** 3 horas (Bloque A 55min + Bloque B 55min + Bloque C 60min + 2 descansos de 5min)
+> **Objetivo:** Que el estudiante convierta requerimientos en casos de prueba usando EP, BVA, tablas de decisión y pairwise.
+> **Entregable:** Suite de tests corriendo en verde + matriz de trazabilidad actualizada.
+> **Prerequisitos:** Python 3.12+, `uv` instalado, terminal funcional.
+
+---
+
+## ANTES DE CLASE — Checklist del instructor
+
+Haz esto **antes** de llegar al salón. No lo dejes para el momento de la clase.
+
+- [ ] Ejecuta `cd proyecto-integrador/design-lab && uv sync && uv run pytest -v` en tu máquina. Todo debe pasar.
+- [ ] Abre SauceDemo (https://www.saucedemo.com) y verifica que funciona.
+- [ ] Ten proyectado en pantalla: este documento, un navegador abierto con SauceDemo, y una terminal.
+- [ ] Verifica que los estudiantes tienen `uv` instalado (puedes enviar instrucciones por correo/chat antes de clase).
+
+---
+
+## 🗺️ MAPA DE LA SESIÓN (proyéctalo al inicio)
+
+```
+Bloque A (55 min) — Yo explico, tú observas
+  0-10   Problema real: por qué 300 tests no encontraron el bug
+  10-25  Las 4 técnicas explicadas con ejemplos simples
+  25-35  Trazabilidad: qué es y por qué importa
+  35-50  Demo en vivo: de requerimiento a test
+  50-55  Resumen + preguntas
+
+  ☕ Descanso 5 min
+
+Bloque B (55 min) — Tú codificas, yo te guío
+  0-10   Arrancar el laboratorio
+  10-30  Leer y ejecutar EP + BVA
+  30-45  Leer y ejecutar tabla de decisión
+  45-55  Leer y ejecutar pairwise
+
+  ☕ Descanso 5 min
+
+Bloque C (60 min) — Tú trabajas solo, yo superviso
+  0-25   Ejercicio: diseñar casos para login de SauceDemo
+  25-45  Mini reto: pairwise para matriz web
+  45-60  Errores comunes + cierre
+```
+
+---
+
+## [POWERPOINT] Diapositivas recomendadas para S1
+
+| # | Título de la diapositiva | Contenido | Cuándo usarla |
+|---|---|---|---|
+| 1 | **Portada** | "Sesión 1: Diseño Técnico de Pruebas Automatizadas" + tu nombre + logo institución | Antes de empezar |
+| 2 | **Objetivo de hoy** | "Convertir requerimientos en casos de prueba usando EP, BVA, tablas de decisión y pairwise" | Inicio, 30 seg |
+| 3 | **El problema** | "300 tests. Todo pasa. Producción se rompe con $1,000. ¿Por qué?" | Bloque A, minuto 0-10 |
+| 4 | **3 preguntas antes de codificar** | 1) ¿Qué probar? 2) ¿Cuánto probar? 3) ¿Cómo demostrar que está probado? | Bloque A, minuto 5 |
+| 5 | **EP — Partición de Equivalencias** | Definición + ejemplo campo "edad" (18-65): 3 particiones, 1 valor por clase | Bloque A, minuto 10-15 |
+| 6 | **BVA — Valores Límite** | Definición + ejemplo edad: probar 17, 18, 65, 66. El error típico: `<` vs `<=` | Bloque A, minuto 15-20 |
+| 7 | **Tabla de Decisión** | Definición + ejemplo: 3 condiciones = 8 reglas. Destacar DT-R8 (tope 15%) | Bloque A, minuto 20-25 |
+| 8 | **Pairwise Testing** | "54 combinaciones → ~10 filas". Cubre cada par al menos una vez | Bloque A, minuto 25 |
+| 9 | **Trazabilidad** | Diagrama REQ → TC → DEF. "Si un test falla, lo rastreas en segundos" | Bloque A, minuto 25-35 |
+| 10 | **Demo: calculate_discount** | Screenshot de `discount.py` con las 5 reglas REQ-DSC-001..005 | Bloque A, minuto 35 |
+| 11 | **Estructura del laboratorio** | Diagrama de carpetas del proyecto + archivos clave | Bloque B, minuto 0 |
+| 12 | **Comandos** | `task setup` → `task test:design` / alternativamente `uv sync` → `uv run pytest -v` | Bloque B, minuto 0 |
+| 13 | **Ejercicio: SauceDemo Login** | Screenshot de saucedemo.com + tabla de lo que deben diseñar | Bloque C, minuto 0 |
+| 14 | **Mini reto: Pairwise web** | Los 4 parámetros + restricción + las 3 validaciones que debe tener el test | Bloque C, minuto 25 |
+| 15 | **Errores comunes** | Tabla de 7 errores (ver sección C.3) | Bloque C, minuto 45 |
+| 16 | **Checklist de salida** | Los 4 items finales (ver sección de cierre) | Últimos 5 min |
+| 17 | **Próxima sesión** | "S2: estos diseños se convierten en pruebas de UI con POM y Screenplay" | Últimos 2 min |
+
+---
+
+# BLOQUE A (55 min) — Yo explico, tú observas
+
+---
+
+## A.1 El problema real (minutos 0-10)
+
+### [SLIDE 3] QUÉ DECIR (guion sugerido):
+
+> "Imaginen esto: un equipo de QA tiene 300 tests automatizados. La suite tarda 40 minutos.
+> Todo pasa en verde. Y aun así, producción se rompe cuando un cliente hace un pedido de
+> exactamente $1,000. ¿Cómo es posible?"
+
+**Pausa.** Deja que respondan. Alguien va a decir "porque no probaron ese valor". Exacto.
+
+### [SLIDE 4] QUÉ DECIR:
+
+> "Cantidad de tests NO es lo mismo que cobertura de diseño. Antes de escribir una sola
+> línea de código, necesitamos responder 3 preguntas:"
+
+1. **¿Qué probar?** → Las técnicas de diseño responden esto.
+2. **¿Cuánto probar?** → Cobertura mínima suficiente, no exhaustiva.
+3. **¿Cómo demostrar que está probado?** → La matriz de trazabilidad.
+
+### QUÉ MOSTRAR:
+- Nada de código todavía. Solo las 3 preguntas en la slide.
+- Si preguntan "¿qué son las técnicas?", responde: "eso viene en los siguientes 15 minutos".
+
+---
+
+## A.2 Las 4 técnicas (minutos 10-25)
+
+### [SLIDE 5] EP — Partición de Equivalencias (5 min)
+
+**QUÉ DECIR:**
+> "Si un campo acepta edades de 18 a 65, no necesitas probar los 47 valores.
+> Todos los valores DENTRO del rango producen el mismo resultado. Basta con probar UNO."
+
+**QUÉ MOSTRAR (dibuja en pizarra o slide):**
+```
+Campo "edad": 18 a 65
+
+  Partición inválida     Partición válida     Partición inválida
+  ┌──────────────┐      ┌──────────────┐     ┌──────────────┐
+  │  edad < 18   │      │  18 ≤ edad   │     │  edad > 65   │
+  │  ej: 10      │      │  ≤ 65        │     │  ej: 70      │
+  │  → error     │      │  ej: 30      │     │  → error     │
+  └──────────────┘      │  → aceptado  │     └──────────────┘
+                        └──────────────┘
+```
+
+**REGLA CLAVE PARA ESTUDIANTES:**
+> "Siempre incluir las particiones INVÁLIDAS. Ahí están los errores más frecuentes."
+
+---
+
+### [SLIDE 6] BVA — Análisis de Valores Límite (5 min)
+
+**QUÉ DECIR:**
+> "Los errores se acumulan en las fronteras. El típico bug es un `<` que debería ser `<=`.
+> Por eso probamos el valor EXACTO del límite y sus vecinos inmediatos."
+
+**QUÉ MOSTRAR:**
+```
+Rango: 18 a 65
+
+       inválido   válido                    válido   inválido
+          ↓         ↓                         ↓        ↓
+    ────17────18─────────────────────65────66────
+          ↑         ↑                         ↑        ↑
+        probar    probar                    probar   probar
+```
+
+**EJEMPLO CONCRETO DEL LABORATORIO:**
+> "En nuestro ejercicio de hoy, el umbral de volumen es $1,000. Vamos a probar $999.99
+> (sin bono) y $1,000.00 (con bono). Si el programador escribió `>` en vez de `>=`,
+> el test de $1,000.00 lo detecta."
+
+---
+
+### [SLIDE 7] Tabla de Decisión (5 min)
+
+**QUÉ DECIR:**
+> "Cuando hay condiciones que interactúan, hacemos una tabla con TODAS las combinaciones.
+> 3 condiciones sí/no = 2³ = 8 reglas."
+
+**QUÉ MOSTRAR (dibuja la tabla en pizarra):**
+
+| # | ¿Premium? | ¿≥ $1,000? | ¿Cupón? | Descuento |
+|---|-----------|-----------|---------|-----------|
+| R1 | No | No | No | 0% |
+| R2 | No | No | Sí | 5% |
+| R3 | No | Sí | No | 5% |
+| R4 | No | Sí | Sí | 10% |
+| R5 | Sí | No | No | 10% |
+| R6 | Sí | No | Sí | 15% |
+| R7 | Sí | Sí | No | 15% |
+| **R8** | **Sí** | **Sí** | **Sí** | **15%** ← tope |
+
+**ENFATIZAR:**
+> "La regla R8 es la más importante. Premium + volumen + cupón suma 20%, pero el tope
+> de 15% lo recorta. Si no construyen la tabla completa, NADIE piensa en probar este caso.
+> Y es un defecto que llega a producción."
+
+---
+
+### [SLIDE 8] Pairwise Testing (5 min)
+
+**QUÉ DECIR:**
+> "Imaginen probar: 3 navegadores × 3 sistemas × 2 idiomas × 3 roles = 54 combinaciones.
+> Pairwise reduce a ~10 filas garantizando que cada PAR de valores aparece al menos una vez.
+> ¿Por qué funciona? Porque la mayoría de defectos de interacción involucran máximo 2 parámetros."
+
+**ADVERTENCIA (muy importante):**
+> "La herramienta que usamos, allpairspy, tiene un bug conocido: cuando hay restricciones,
+> puede dejar pares sin cubrir. Hoy van a ver eso en el código y van a aprender a detectarlo
+> con un test. Moraleja: nunca confíen ciegamente en la herramienta."
+
+---
+
+## A.3 Trazabilidad (minutos 25-35)
+
+### [SLIDE 9] QUÉ DECIR:
+
+> "Trazabilidad es poder rastrear desde un fallo hasta el requerimiento en segundos.
+> Usamos 3 IDs: REQ (requerimiento), TC (test case), DEF (defecto)."
+
+**QUÉ MOSTRAR (dibuja este diagrama):**
+```
+  REQUERIMIENTO            CASO DE PRUEBA              DEFECTO
+ ┌──────────────┐  1..N  ┌─────────────────┐  0..N  ┌──────────┐
+ │ REQ-DSC-002  │───────►│ TC-DSC-BVA-004  │───────►│ DEF-017  │
+ │ "≥1000 → +5%"│        │ límite 1000.00  │        │ off-by-1 │
+ └──────────────┘        └─────────────────┘        └──────────┘
+```
+
+**QUÉ AGREGAR:**
+> "La matriz vive en un CSV dentro del repo, no en un Excel que nadie actualiza.
+> Cuando alguien revisa tu Pull Request, lo primero que mira es: '¿la parametrización
+> cubre la tabla completa?' — el código viene después."
+
+---
+
+## A.4 Demo en vivo (minutos 35-50)
+
+### [SLIDE 10] QUÉ HACER — paso a paso:
+
+**PASO 1 (3 min):** Abre `design_lab/discount.py` proyectado en pantalla.
+
+> "Esta función calcula el descuento de un pedido. Tiene 5 requerimientos
+> en el docstring: REQ-DSC-001 al 005. Léanlos."
+
+Señala cada constante y explica qué hace:
+- `VOLUME_THRESHOLD = 1_000.0` → "umbral de bono por volumen"
+- `DISCOUNT_CAP = 15.0` → "tope máximo, sin importar qué sume"
+
+**PASO 2 (5 min):** Deriva casos en voz alta desde los requerimientos.
+
+> "REQ-DSC-005 dice: el pedido debe estar en (0; 10000]. De ahí salen 3 particiones:"
+
+Escribe en pizarra:
+- Inválida baja: `≤ 0` (ej: 0, -50)
+- Válida: `(0; 10000]` (ej: 500)
+- Inválida alta: `> 10000` (ej: 10000.01)
+
+> "BVA sobre el rango: 0.01, 0, 10000, 10000.01 — 4 tests cubren toda la frontera."
+
+**PASO 3 (5 min):** Muestra cómo la tabla de decisión expone DT-R8.
+
+> "3 condiciones: ¿premium? / ¿≥1000? / ¿cupón? → 8 reglas. La regla R8:
+> premium + volumen + cupón = 20%, pero el tope recorta a 15%.
+> Sin la tabla, este caso NO existe en la suite."
+
+**PASO 4 (2 min):** Abre `matriz-trazabilidad.csv` y muestra cómo los IDs conectan todo.
+
+> "Miren: el TC-DSC-BVA-004 del test es el mismo ID que está en la matriz.
+> Si este test falla, sé exactamente qué requerimiento está en riesgo."
+
+---
+
+## A.5 Resumen y preguntas (minutos 50-55)
+
+**QUÉ DECIR:**
+> "Resumen: 4 técnicas (EP, BVA, tabla, pairwise) + trazabilidad (REQ→TC→DEF).
+> En el Bloque B van a ejecutar todo esto en código real."
+
+**Preguntas de chequeo rápido (hazlas al grupo, que respondan en voz alta):**
+1. "¿Cuántos valores de BVA necesito para un rango (0; 10000]?" → **4: los dos límites y sus vecinos**
+2. "¿Cuántas reglas tiene una tabla con 3 condiciones booleanas?" → **8 (2³)**
+3. "¿Qué pasa si un test no tiene ID de trazabilidad?" → **Es un test zombie: no sabemos qué prueba ni por qué**
+
+> ☕ **Descanso 5 min**
+
+---
+
+# BLOQUE B (55 min) — Tú codificas, yo te guío
+
+---
+
+## B.1 Arrancar el laboratorio (minutos 0-10)
+
+### [SLIDE 11 + 12] QUÉ HACER:
+
+**PASO 1:** Proyecta la estructura de carpetas:
+```
+proyecto-integrador/
+├── trazabilidad/matriz-trazabilidad.csv   ← la matriz REQ↔TC↔DEF
+└── design-lab/                            ← laboratorio de hoy
+    ├── pyproject.toml                     ← dependencias
+    ├── design_lab/
+    │   ├── discount.py                    ← función a probar
+    │   └── pairwise_matrix.py             ← generador pairwise
+    ├── data/decision_table.yaml           ← datos desacoplados
+    └── tests/
+        ├── test_equivalence_boundary.py   ← EP + BVA
+        ├── test_decision_table.py         ← tabla de decisión
+        └── test_pairwise.py              ← pairwise
+```
+
+**PASO 2:** Di a los estudiantes que ejecuten en su terminal:
+
+```bash
+cd proyecto-integrador/design-lab
+uv sync
+```
+
+**QUÉ VERIFICAR:** Camina por el salón. Todos deben ver algo como:
+```
+Resolved N packages in Xms
+Installed pytest-8.x.x pyyaml-6.x.x allpairspy-2.x.x
+```
+
+Si alguien tiene error, las causas más comunes son:
+- No tiene `uv` → Instalar: `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
+- Está en la carpeta equivocada → Verificar que esté en `design-lab/`
+
+**PASO 3:** Cuando todos tengan `uv sync` listo:
+
+```bash
+uv run pytest -v
+```
+
+**OUTPUT ESPERADO** (proyéctalo para que vean qué esperar):
+```
+tests/test_equivalence_boundary.py::test_valid_partitions[TC-DSC-EP-001-standard-base] PASSED
+tests/test_equivalence_boundary.py::test_valid_partitions[TC-DSC-EP-002-premium-base] PASSED
+tests/test_equivalence_boundary.py::test_valid_partitions[TC-DSC-EP-003-standard-cupon] PASSED
+tests/test_equivalence_boundary.py::test_valid_partitions[TC-DSC-EP-004-premium-volumen] PASSED
+tests/test_equivalence_boundary.py::test_boundary_values[TC-DSC-BVA-001-minimo-valido] PASSED
+tests/test_equivalence_boundary.py::test_boundary_values[TC-DSC-BVA-003-justo-bajo-umbral-volumen] PASSED
+tests/test_equivalence_boundary.py::test_boundary_values[TC-DSC-BVA-004-umbral-volumen-exacto] PASSED
+tests/test_equivalence_boundary.py::test_boundary_values[TC-DSC-BVA-005-maximo-valido] PASSED
+tests/test_equivalence_boundary.py::test_invalid_partitions_raise[TC-DSC-INV-001-total-cero] PASSED
+tests/test_equivalence_boundary.py::test_invalid_partitions_raise[TC-DSC-INV-002-sobre-maximo] PASSED
+tests/test_equivalence_boundary.py::test_invalid_partitions_raise[TC-DSC-INV-003-tipo-cliente-desconocido] PASSED
+tests/test_equivalence_boundary.py::test_invalid_partitions_raise[TC-DSC-INV-004-total-negativo] PASSED
+tests/test_decision_table.py::test_decision_table[TC-DT-R1] PASSED
+tests/test_decision_table.py::test_decision_table[TC-DT-R2] PASSED
+tests/test_decision_table.py::test_decision_table[TC-DT-R3] PASSED
+tests/test_decision_table.py::test_decision_table[TC-DT-R4] PASSED
+tests/test_decision_table.py::test_decision_table[TC-DT-R5] PASSED
+tests/test_decision_table.py::test_decision_table[TC-DT-R6] PASSED
+tests/test_decision_table.py::test_decision_table[TC-DT-R7] PASSED
+tests/test_decision_table.py::test_decision_table[TC-DT-R8] PASSED
+tests/test_decision_table.py::test_decision_table_is_complete PASSED
+tests/test_pairwise.py::test_pairwise_reduces_cartesian_product PASSED
+tests/test_pairwise.py::test_pairwise_respects_constraints PASSED
+tests/test_pairwise.py::test_pairwise_covers_every_achievable_pair PASSED
+tests/test_pairwise.py::test_impossible_pairs_are_not_required PASSED
+
+25 passed
+```
+
+**QUÉ SEÑALAR:**
+> "Cuenten: 25 tests, todos en verde. Miren los IDs: TC-DSC-EP-001, TC-DSC-BVA-004,
+> TC-DT-R8... son los mismos que están en la matriz de trazabilidad."
+
+---
+
+## B.2 EP + BVA ejecutables (minutos 10-30)
+
+### QUÉ HACER — paso a paso:
+
+**PASO 1 (5 min):** Di a los estudiantes que abran `tests/test_equivalence_boundary.py`.
+
+> "Antes de ejecutar nada, LEAN los datos. Cada `pytest.param` es un caso de prueba.
+> El `id=` es el identificador de trazabilidad."
+
+**HAZ QUE NOTEN:**
+- `VALID_PARTITIONS` tiene 4 filas → 4 particiones válidas distintas.
+- `BOUNDARIES` tiene 4 filas → los 4 puntos críticos.
+- `INVALID_PARTITIONS` tiene 4 filas → las 4 entradas que deben fallar.
+
+**PREGUNTA PARA EL GRUPO:**
+> "¿Por qué en BOUNDARIES usamos 'standard' y sin cupón?"
+
+Respuesta: "Para aislar el efecto del monto. Si usáramos premium, no sabríamos si el resultado es por el tipo de cliente o por el monto."
+
+**PASO 2 (10 min):** Haz que cada estudiante lea los comentarios del archivo (ahora documentados). Pide que sigan el flujo:
+
+1. Lee la docstring del archivo → explica qué son EP y BVA.
+2. Lee el BLOQUE 1 (VALID_PARTITIONS) → cada fila con su comentario.
+3. Lee el BLOQUE 2 (BOUNDARIES) → nota por qué se usa "standard".
+4. Lee el BLOQUE 3 (INVALID_PARTITIONS) → nota el `pytest.raises`.
+
+**PASO 3 (5 min):** Ejecuta SOLO los tests de EP/BVA para que vean el output filtrado:
+
+```bash
+uv run pytest -v tests/test_equivalence_boundary.py
+```
+
+**OUTPUT ESPERADO:** 12 passed.
+
+**QUÉ SEÑALAR:**
+> "12 tests cubren todo: 4 particiones válidas, 4 valores límite, 4 particiones inválidas.
+> El `pytest.raises(ValueError)` no es manejo de errores — es un requerimiento ejecutable.
+> Si el código no lanza la excepción, el test falla."
+
+---
+
+## B.3 Tabla de decisión (minutos 30-45)
+
+### QUÉ HACER:
+
+**PASO 1 (5 min):** Di a los estudiantes que abran PRIMERO los datos:
+
+```
+data/decision_table.yaml
+```
+
+> "Este archivo tiene las 8 reglas. Léanlas. La más importante es DT-R8 — la última."
+
+**QUÉ PREGUNTAR:**
+> "Si el negocio cambia el tope de 15% a 20%, ¿qué archivo tengo que tocar?"
+
+Respuesta: "Solo el YAML — cambio `expected: 15.0` a `expected: 20.0` en DT-R6, DT-R7 y DT-R8. No toco código Python. Eso es desacoplamiento."
+
+**PASO 2 (5 min):** Ahora que abran `tests/test_decision_table.py`.
+
+> "Miren la función `load_rules()`: lee el YAML y lo convierte en `pytest.param`.
+> El test no tiene ningún dato hardcodeado — todo viene del YAML."
+
+**SEÑALAR EL TEST GUARDRAIL:**
+> "`test_decision_table_is_complete` cuenta las combinaciones. Si alguien borra una
+> regla del YAML, este test falla. Protege el diseño, no solo el código."
+
+**PASO 3 (5 min):** Ejecuta solo los tests de tabla:
+
+```bash
+uv run pytest -v tests/test_decision_table.py
+```
+
+**OUTPUT ESPERADO:** 9 passed (8 reglas + 1 guardrail).
+
+**EJERCICIO RÁPIDO (si hay tiempo):** Pide que borren la regla DT-R8 del YAML y corran de nuevo:
+
+```bash
+uv run pytest -v tests/test_decision_table.py::test_decision_table_is_complete
+```
+
+**OUTPUT ESPERADO:** FAILED — "Faltan reglas: hay 7 de 8 combinaciones esperadas"
+
+> "Esto es un guardrail de diseño. Si alguien borra una regla, el test lo detecta."
+
+**Después del ejercicio, restaurar el YAML.**
+
+---
+
+## B.4 Pairwise (minutos 45-55)
+
+### QUÉ HACER:
+
+**PASO 1 (3 min):** Pide que abran `tests/test_pairwise.py`.
+
+> "Este archivo prueba la matriz cross-browser: 3 navegadores × 3 sistemas × 2 idiomas × 3 roles = 54 combinaciones.
+> Pairwise reduce a ~10 filas."
+
+**SEÑALAR LA RESTRICCIÓN:**
+> "webkit solo corre en macOS. Es una restricción real: Safari no existe en Windows ni Linux."
+
+**PASO 2 (3 min):** Ejecuta:
+
+```bash
+uv run pytest -v tests/test_pairwise.py
+```
+
+**OUTPUT ESPERADO:** 4 passed.
+
+**PASO 3 (4 min):** Explica el gap analysis. Abre `design_lab/pairwise_matrix.py` y señala:
+
+> "El patrón es: generar → auditar → complementar. allpairspy genera la matriz inicial.
+> Nuestra función `missing_pairs` revisa si quedaron huecos. Si los hay, agregamos filas extra."
+
+**LA LECCIÓN:**
+> "Nunca asuman que la herramienta garantiza algo. Demuéstrenlo con un test.
+> El test `test_pairwise_covers_every_achievable_pair` hace exactamente eso:
+> audita que no queden pares sin cubrir."
+
+> ☕ **Descanso 5 min**
+
+---
+
+# BLOQUE C (60 min) — Tú trabajas solo, yo superviso
+
+---
+
+## C.1 Ejercicio individual: Diseñar casos para SauceDemo Login (minutos 0-25)
+
+### [SLIDE 13] QUÉ HACER:
+
+**PASO 1 (3 min):** Pide que abran https://www.saucedemo.com en su navegador.
+
+> "Dediquen 3 minutos a explorar la página. Prueben hacer login con diferentes usuarios.
+> Anoten lo que observan."
+
+**Los 4 usuarios de prueba (escríbelos en pizarra):**
+- `standard_user` / `secret_sauce` → login exitoso
+- `locked_out_user` / `secret_sauce` → mensaje de error específico
+- `problem_user` / `secret_sauce` → login exitoso (pero con glitches visuales)
+- `performance_glitch_user` / `secret_sauce` → login exitoso (pero lento)
+
+**PASO 2 (2 min):** Explica la tarea:
+
+> "Van a editar la matriz de trazabilidad (`matriz-trazabilidad.csv`) y agregar casos
+> de prueba para el login. Ya hay 3 filas marcadas como PENDIENTE: REQ-LOG-001, 002, 003."
+
+**QUÉ MOSTRAR** (proyecta una fila de ejemplo de la matriz):
+
+| Columna | Qué escribir |
+|---------|-------------|
+| `req_id` | Ej: `REQ-LOG-001` |
+| `requerimiento` | Lo que observaste, redactado como requerimiento |
+| `tc_id` | Ej: `TC-LOG-EP-001` |
+| `caso_de_prueba` | Qué entra y qué se espera |
+| `tecnica` | `Partición de equivalencias`, `BVA` o `Tabla de decisión` |
+| `archivo_prueba` | Dejar vacío (se completa en S2) |
+| `estado` | `DISEÑO` |
+| `def_id` | Dejar vacío |
+
+**PASO 3 (20 min):** Los estudiantes trabajan solos. Tú caminas por el salón respondiendo dudas.
+
+**GUÍA DE LO QUE DEBEN PRODUCIR** (para ti, no se los digas directamente):
+
+Requerimientos observables:
+- `REQ-LOG-001`: Credenciales válidas redirigen a `/inventory.html`
+- `REQ-LOG-002`: Usuario bloqueado recibe mensaje específico
+- `REQ-LOG-003`: Credenciales inválidas muestran error
+
+Particiones de equivalencia:
+- Usuario: válido activo / válido bloqueado / inexistente / vacío
+- Contraseña: correcta / incorrecta / vacía
+
+Tabla de decisión (3 condiciones: ¿usuario existe? / ¿contraseña correcta? / ¿usuario bloqueado?)
+
+**CÓMO SABER SI QUEDÓ BIEN** (diles esto a los 15 min):
+> "Checklist: cada REQ-LOG tiene al menos un TC, cada TC declara su técnica,
+> y hay al menos una partición inválida y una tabla de decisión."
+
+---
+
+## C.2 Mini reto: Pairwise para matriz web (minutos 25-45)
+
+### [SLIDE 14] QUÉ HACER:
+
+**PASO 1 (2 min):** Explica el escenario:
+
+> "La matriz de compatibilidad del proyecto es:
+> navegador × tamaño de pantalla × tema × rol = 36 combinaciones.
+> Su tarea: generar la matriz pairwise con una restricción."
+
+**Escribe en pizarra:**
+```
+navegador:   {chromium, firefox, webkit}
+pantalla:    {mobile, tablet, desktop}
+tema:        {light, dark}
+rol:         {admin, user}
+
+Restricción: admin NO se prueba en mobile
+
+Total combinaciones: 3 × 3 × 2 × 2 = 36
+```
+
+**PASO 2 (18 min):** Los estudiantes trabajan en `tests/test_pairwise.py`.
+
+Deben:
+1. Agregar la constante `PARAMETERS_LOGIN` con los 4 parámetros.
+2. Crear la función de restricción (admin no va con mobile).
+3. Generar la matriz pairwise.
+4. Escribir un test que verifique:
+   - (a) El total es menor que 36.
+   - (b) La restricción se respeta.
+   - (c) Todos los pares `(pantalla, tema)` están cubiertos.
+
+**QUÉ PREGUNTAR AL FINALIZAR** (para la justificación):
+> "¿Qué defectos podrían escaparse con pairwise en vez del producto cartesiano?"
+
+Respuesta esperada: "Defectos que requieren 3 o más parámetros interactuando simultáneamente — ej: un bug que solo aparece con chromium + mobile + dark + admin. Pairwise garantiza pares, no tríos ni cuartetos."
+
+---
+
+## C.3 Errores comunes + cierre (minutos 45-60)
+
+### [SLIDE 15] QUÉ HACER (10 min):
+
+Proyecta esta tabla y discútela con el grupo. Pide ejemplos de cada uno:
+
+| ❌ Error común | ✅ Práctica correcta |
+|---|---|
+| Probar solo el "camino feliz" con valores arbitrarios | Cada valor viene de una técnica y es trazable a un REQ |
+| Un test gigante con 15 asserts | Un caso parametrizado; agregar caso = agregar línea |
+| Datos incrustados en el código del test | Datos en YAML o CSV versionados en `data/` |
+| Matriz de trazabilidad en Excel que nadie actualiza | CSV en el repo, revisado en el PR |
+| "Más tests = más calidad" → suites de 40 min con huecos | Cobertura mínima suficiente: EP + BVA + tabla + pairwise |
+| Ignorar particiones inválidas ("eso nunca pasa") | `pytest.raises` como caso de primera clase |
+| Copiar y pegar tests cambiando solo un número | `@parametrize`: agregar caso = agregar una línea |
+
+### [SLIDE 16] CHECKLIST DE SALIDA (5 min):
+
+Proyecta y pide que cada estudiante verifique en su máquina:
+
+- [ ] `uv run pytest -v` corre en verde: EP, BVA, tablas de decisión y pairwise (25+ tests).
+- [ ] `matriz-trazabilidad.csv` tiene los REQ-DSC-* verificados y los REQ-LOG-* completados.
+- [ ] Mini reto pairwise implementado y pasando.
+- [ ] Pueden explicar en 1 minuto por qué DT-R8 no existiría sin tabla de decisión.
+
+### [SLIDE 17] PRÓXIMA SESIÓN (2 min):
+
+> "En la Sesión 2, estos diseños se convierten en pruebas automatizadas de la UI
+> de SauceDemo, usando Page Object Model, Screenplay y DRY. La matriz de trazabilidad
+> crece: los TC-LOG-* pasan de DISEÑO a PASS."
+
+---
+
+## NOTAS PARA EL INSTRUCTOR
+
+### Si el grupo es avanzado:
+- En B.3, después de mostrar el guardrail, pide que MODIFIQUEN el YAML para agregar una novena regla con un tipo de cliente "vip" y vean qué pasa.
+- En C.1, pide que diseñen también casos para el carrito de compras de SauceDemo (agregar/quitar items, cantidades).
+
+### Si el grupo necesita más tiempo:
+- Reduce C.2 (mini reto) a 10 min y da el código base del pairwise login como plantilla.
+- Salta el ejercicio de borrar DT-R8 en B.3 — solo muéstralo tú en tu pantalla.
+
+### Si algo falla técnicamente:
+- `uv sync` falla → verifica conexión a internet. Alternativa: `pip install pytest allpairspy pyyaml`.
+- `pytest` no encuentra tests → verifica que están en la carpeta `design-lab/`.
+- Tests fallan en rojo → ejecuta `uv run pytest -v --tb=short` para ver el error específico.
+
+### Para evaluar esta sesión:
+- Revisa los commits de cada estudiante en la matriz de trazabilidad.
+- Verifica que los REQ-LOG-* tienen al menos 3 TC cada uno con técnica declarada.
+- El mini reto pairwise debe tener las 3 validaciones (a, b, c).
 # Sesión 1 (Horas 1-3) — Diseño Técnico de Pruebas Automatizadas
 
 > **Qué vas a lograr hoy:** convertir requisitos en casos de prueba usando cuatro técnicas concretas — partición de equivalencias (*Equivalence Partitioning*, EP), análisis de valores límite (*Boundary Value Analysis*, BVA), tablas de decisión y pruebas combinatorias por pares (*Pairwise Testing*). Al terminar tendrás un laboratorio corriendo en verde y la primera versión de tu matriz de trazabilidad, que conecta requerimientos, casos y defectos.

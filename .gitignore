@@ -26,3 +26,4 @@ Thumbs.db
 
 # Instructor-only session guides (NOT for students)
 sesiones/**/SESION_*.md
+sesiones/sesion-02/GUIA_INSTRUCTOR.md

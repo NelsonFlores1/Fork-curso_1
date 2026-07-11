@@ -19,8 +19,10 @@ from screenplay.actor import Actor
 from screenplay.abilities.browse_web import BrowseTheWeb
 from screenplay.tasks.login import Login
 from screenplay.tasks.add_to_cart import AddToCart
+from screenplay.tasks.complete_checkout import CompleteCheckout
 from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
+from pages.checkout_page import CheckoutPage
 
 
 def test_actor_inicia_sesion_exitosamente(page):
@@ -77,3 +79,11 @@ def test_actor_verifica_carrito(page):
 
     assert cart.is_loaded()
     assert cart.contains("Sauce Labs Fleece Jacket")
+
+def test_actor_completar_checkout(page):
+    """Un Actor puede completar el formulario de checkout"""
+    nelson = Actor("Nelson").can(BrowseTheWeb.using(page))
+    nelson.attempts_to(
+        Login.as_user("standard_user", "secret_sauce"),
+        CompleteCheckout.with_info("Nelson", "Test", "0010")
+    )

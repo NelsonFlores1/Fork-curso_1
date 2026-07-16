@@ -26,3 +26,4 @@ Thumbs.db
 
 # Instructor-only guides (NOT for students)
 sesiones/**/GUIA_*.md
+Makefile

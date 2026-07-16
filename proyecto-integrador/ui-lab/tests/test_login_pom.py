@@ -36,7 +36,7 @@ INVALID_LOGIN_CASES = [
     pytest.param(
         "locked_out_user", "secret_sauce",
         "Sorry, this user has been locked out.",
-        id="usuario_bloqueado",
+        id="usuario_bloqueado", # el id solamente sirve para que el nombre del test sea mas descriptivo, e.g. test_login_invalido_muestra_error[usuario_bloqueado]
     ),
     pytest.param(
         "", "secret_sauce",

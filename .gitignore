@@ -1,3 +1,4 @@
+
 # Python
 __pycache__/
 *.pyc
@@ -27,3 +28,9 @@ Thumbs.db
 # Instructor-only guides (NOT for students)
 sesiones/**/GUIA_*.md
 Makefile
+
+# Guías privadas del instructor (no publicar a estudiantes)
+sesiones/**/GUIA_INSTRUCTOR.md
+GUIA_INSTRUCTOR*.md
+/.qoder
+

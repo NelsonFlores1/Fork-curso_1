@@ -3,7 +3,7 @@ services:
     image: nginx:1.27-alpine
     container_name: curso-perf-target
     ports:
-      - "8080:8080"
+      - "8080:8080" # HOST_PORT : CONTAINER_PORT
     volumes:
       - ./target/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./target/index.html:/usr/share/nginx/html/index.html:ro
@@ -22,6 +22,18 @@ services:
     environment:
       BASE_URL: http://target:8080
     command: ["run", "/scripts/smoke.js"]
+    depends_on:
+      target:
+        condition: service_healthy
+  
+  k6-jsonplaceholder_smoke:
+    image: grafana/k6:1.8.0
+    container_name: curso-k6-jsonplaceholder_smoke
+    volumes:
+      - ./k6:/scripts:ro
+    environment:
+      BASE_URL: http://target:8080
+    command: ["run", "/scripts/jsonplaceholder_smoke.js"]
     depends_on:
       target:
         condition: service_healthy
@@ -46,6 +58,18 @@ services:
     environment:
       BASE_URL: http://target:8080
     command: ["run", "/scripts/fail_demo.js"]
+    depends_on:
+      target:
+        condition: service_healthy
+
+  k6-jsonplaceholder_fail:
+    image: grafana/k6:1.8.0
+    container_name: curso-k6-jsonplaceholder_fail
+    volumes:
+      - ./k6:/scripts:ro
+    environment:
+      BASE_URL: http://target:8080
+    command: ["run", "/scripts/jsonplaceholder_fail.js"]
     depends_on:
       target:
         condition: service_healthy

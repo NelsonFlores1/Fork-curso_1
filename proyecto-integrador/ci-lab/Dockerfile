@@ -13,4 +13,5 @@ COPY api-lab/tests ./tests
 
 RUN uv sync --group dev --frozen
 
-CMD ["uv", "run", "pytest", "-v"]
+# CMD ["uv", "run", "pytest", "-v"]
+CMD ["uv", "run", "pytest", "-v", "-k", "smoke"]

@@ -43,6 +43,6 @@ def auth_headers() -> dict:
 @pytest.fixture(scope="session")
 def api(base_url: str, auth_headers: dict):
     """Cliente único para toda la corrida: se crea una vez, se cierra al final."""
-    client = ApiClient(base_url, headers=auth_headers)
-    yield client
+    client = ApiClient(base_url, headers=auth_headers) # base_url y auth_headers son fixtures, pero porque no pueden ser metodos normales?
+    yield client # porque en el test se llama a 'api' y no a 'client' si es en este punto donde los tests empiezan a ejecutarse?
     client.close()

@@ -5,6 +5,10 @@ vars:
   UI_LAB: proyecto-integrador/ui-lab
   API_TESTS: proyecto-integrador/api-tests
   API_LAB: proyecto-integrador/api-lab
+  CI_LAB: proyecto-integrador/ci-lab
+  PERF_LAB: proyecto-integrador/performance
+  SECURITY_LAB: proyecto-integrador/security
+  MAINT_LAB: proyecto-integrador/maintenance-lab
 
 tasks:
   # ── Sesión 1: Diseño de pruebas ───────────────────────────────────────────
@@ -68,3 +72,81 @@ tasks:
     dir: "{{.API_LAB}}"
     cmds:
       - uv run pytest -v
+
+  # ── Sesión 5: CI/CD (Docker espejo de GitHub Actions) ─────────────────────
+  test:ci:
+    desc: "S5 — Corre api-lab dentro de Docker (mismo criterio que CI)"
+    dir: "{{.CI_LAB}}"
+    cmds:
+      - docker compose build test
+      - docker compose run --rm --no-deps test
+
+  # ── Sesión 6: Performance K6 ──────────────────────────────────────────────
+  test:perf:smoke:
+    desc: "S6 — Smoke K6 contra target local"
+    dir: "{{.PERF_LAB}}"
+    cmds:
+      - docker compose up -d target
+      - docker compose run --rm k6-smoke
+
+  test:perf:load:
+    desc: "S6 — Load K6 con thresholds"
+    dir: "{{.PERF_LAB}}"
+    cmds:
+      - docker compose up -d target
+      - docker compose run --rm k6-load
+
+  # ── Sesión 7: Seguridad ZAP + Axe ─────────────────────────────────────────
+  test:security:zap:
+    desc: "S7 — OWASP ZAP baseline contra Juice Shop local"
+    dir: "{{.SECURITY_LAB}}"
+    cmds:
+      - python scripts/run_baseline.py
+
+  test:security:axe:
+    desc: "S7 — Gate Axe (WCAG); exit 1 esperado (bad_page rota a propósito)"
+    dir: "{{.SECURITY_LAB}}/a11y"
+    cmds:
+      - uv sync --group dev
+      - uv run pytest -v
+
+  # ── Sesión 8: Mantenimiento, mutación y selectores robustos ───────────────
+  # Todas estas tasks son IDEMPOTENTES: misma salida / mismo exit code en limpio.
+  # Antes de la primera vez: `task setup:maint`
+  setup:maint:
+    desc: "S8 — Instala dependencias del laboratorio de mantenimiento + Chromium"
+    dir: "{{.MAINT_LAB}}"
+    cmds:
+      - uv sync --group dev
+      - uv run playwright install chromium
+
+  test:maint:
+    desc: "S8 — Suite oficial (la débil a propósito) del maintenance-lab"
+    dir: "{{.MAINT_LAB}}"
+    cmds:
+      - uv sync --group dev
+      - uv run pytest -v
+
+  test:maint:mutation:
+    desc: "S8 — Mutation testing (cosmic-ray) + HTML; exit 0 con suite débil (score 50%)"
+    dir: "{{.MAINT_LAB}}"
+    cmds:
+      - uv sync --group dev
+      - python scripts/run_mutation.py
+      # Gate estricto (exit 1 con suite débil): python scripts/run_mutation.py --enforce-gate
+
+  test:maint:flaky:
+    desc: "S8 — Demo flaky DETERMINISTA (prueba que hay flakiness + cura con semilla)"
+    dir: "{{.MAINT_LAB}}"
+    cmds:
+      - uv sync --group dev
+      - uv run pytest flaky/test_flaky_consistent.py -v
+      # Demo en vivo (NO determinista, solo a mano en clase):
+      #   uv run pytest flaky/test_flaky_demo.py::test_worker_es_w1_FLAKY -v
+
+  test:maint:healing:
+    desc: "S8 — Selector frágil vs robusto; exit 1 esperado (1 failed + 1 passed)"
+    dir: "{{.MAINT_LAB}}"
+    cmds:
+      - uv sync --group dev
+      - uv run pytest healing -v

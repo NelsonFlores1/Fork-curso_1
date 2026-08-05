@@ -1,7 +1,7 @@
 # Sesión 9 — Contenido de diapositivas (para alumnos)
 ## Móviles, escritorio y regresión visual
 
-> **24 slides** · Bloque A: 1–9 (45 min) · Bloque B: 10–17 (45 min) · Bloque C: 18–24 (45 min)
+> **25 slides** · Bloque A: 1–9 (45 min) · Bloque B: 10–11b–17 (45 min) · Bloque C: 18–24 (45 min)
 > Guion oral en `GUIA_INSTRUCTOR.md`. Sin dinámicas de chat.
 
 ---
@@ -81,6 +81,15 @@
 - `uv run playwright install chromium`
 - `uv run python scripts/capture_baselines.py`
 - App: `app/index.html` (login + producto + dark + responsive)
+
+### Slide 11b — Anatomía del repo (4 min)
+**Título:** Qué archivo hace qué (sin curso de front)
+- `pyproject.toml` — deps (`playwright`, `pillow`) + `testpaths = ["tests"]`
+- `tests/conftest.py` — viewports 390×844 / 1280×720 + URLs `file://`
+- `tests/baselines/*.png` — contrato visual versionado en git
+- `gate/` — suite roja aparte (mismo patrón que `healing/` en S8)
+- `reports/` — capturas actuales (gitignored)
+- `app/index.html` — solo importan `?broken=1` y `?theme=dark` para los tests
 
 ### Slide 12 — Smoke móvil (6 min)
 **Título:** Viewport 390×844

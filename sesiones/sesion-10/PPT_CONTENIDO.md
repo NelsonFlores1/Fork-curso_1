@@ -1,7 +1,7 @@
 # Sesión 10 — Contenido de diapositivas (para alumnos)
 ## Cierre · Puerta de Calidad de Release
 
-> **18 slides** · 2 horas · A 1–7 (40) · B 8–14 (40) · C 15–18 (20)
+> **19 slides** · 2 horas · A 1–7 (40) · B 8–9b–14 (40) · C 15–18 (20)
 > Guion en `GUIA_INSTRUCTOR.md`. Sin dinámicas de chat.
 
 ---
@@ -64,6 +64,14 @@
 - `uv run pytest -v` → **6 passed**
 - El juez tiene tests propios (no es magia)
 - Task: `task test:gate`
+
+### Slide 9b — Anatomía del repo (4 min)
+**Título:** Core del juez (config, no magia)
+- `pyproject.toml` — solo pytest; `pythonpath = ["src"]`
+- `src/release_gate/__init__.py` — `THRESHOLDS` + `evaluate()`
+- `run_gate.py` — atajo: mete `src/` en el path (Windows-friendly)
+- `metrics/*.json` — entradas de demo (simulan artefactos de CI)
+- `tests/` — el juez se prueba a sí mismo antes de juzgar
 
 ### Slide 10 — Release sano (7 min)
 **Título:** metrics/healthy.json → exit 0

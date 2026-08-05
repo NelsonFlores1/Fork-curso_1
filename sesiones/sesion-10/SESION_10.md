@@ -27,6 +27,18 @@ uv run python run_gate.py metrics/blocked_mutation.json  # exit 1
 
 ---
 
+## Anatomía del lab (opcional — core del ejemplo)
+
+| Pieza | Rol |
+|---|---|
+| `pyproject.toml` | Solo pytest; `pythonpath = ["src"]` |
+| `src/release_gate/__init__.py` | `THRESHOLDS` + función `evaluate()` |
+| `run_gate.py` | CLI que funciona con `uv run` sin instalar paquete |
+| `metrics/*.json` | Entradas de demo (simulan artefactos de jobs de CI) |
+| `tests/test_release_gate.py` | El juez se prueba a sí mismo |
+
+---
+
 ## Agenda (2 horas)
 
 | Bloque | Duración | Contenido |

@@ -30,6 +30,22 @@ uv run pytest tests -v          # 5 passed
 
 ---
 
+## Anatomía del lab (opcional — core del ejemplo)
+
+No es curso de front. Esto es lo que suele interesar cuando preguntan “¿cómo está armado?”:
+
+| Archivo / carpeta | Para qué sirve en QA |
+|---|---|
+| `pyproject.toml` | Deps (`playwright`, `pillow`) y `testpaths = ["tests"]` |
+| `tests/conftest.py` | Viewports 390×844 / 1280×720 y URLs `file://` |
+| `tests/visual_utils.py` | Diff de píxeles (Pillow) + umbral |
+| `tests/baselines/*.png` | Contrato visual versionado en git |
+| `gate/` | Suite roja fuera de `testpaths` (patrón S8 `healing/`) |
+| `reports/` | Capturas actuales (gitignored) |
+| `app/index.html` | Solo importan `?broken=1`, `?theme=dark` y roles ARIA |
+
+---
+
 ## Agenda (3 horas)
 
 | Bloque | Duración | Contenido |
@@ -67,11 +83,13 @@ Una suite desktop pasa: login, carrito, checkout. En el teléfono el botón “I
 | **Espresso** | Android nativo, en-proceso, muy estable |
 | **XCUITest** | iOS nativo (Apple) |
 
+### 4. Emulador vs dispositivo real (Slide 7)
+
 Emulador: barato, reproducible, no idéntico al hardware. Dispositivo real: gestos, red, batería — más caro de mantener.
 
-### 4. Regresión visual (Slide 7–8)
+### 5. Regresión visual y Playwright (Slides 8–9)
 
-Línea base (PNG) + captura actual + umbral de píxeles. Si el diff supera el umbral, el gate falla — igual que K6, ZAP y mutación. Applitools/Percy agregan IA y baselines en la nube; el concepto es el mismo.
+Línea base (PNG) + captura actual + umbral de píxeles. Si el diff supera el umbral, el gate falla — igual que K6, ZAP y mutación. Applitools/Percy agregan IA y baselines en la nube; el concepto es el mismo. Hands-on: Playwright (viewport + PNG) porque Appium no cabe en 45 min.
 
 ---
 

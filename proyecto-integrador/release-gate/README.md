@@ -3,6 +3,18 @@
 Juez único de la **Puerta de Calidad de Release**. Lee un JSON de métricas
 (pass rate, p95, ZAP, mutación, a11y, diff visual) y decide exit 0 / 1.
 
+## Estructura
+
+```
+release-gate/
+├── pyproject.toml
+├── run_gate.py                 ← uv run python run_gate.py metrics/…
+├── src/release_gate/__init__.py  ← THRESHOLDS + evaluate()
+├── metrics/*.json              ← entradas de demo
+├── tests/test_release_gate.py
+└── workflows/qa-release-gate.yml
+```
+
 ## Setup
 
 ```bash

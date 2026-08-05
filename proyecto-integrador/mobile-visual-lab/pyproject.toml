@@ -17,4 +17,3 @@ dev = [
 testpaths = ["tests"]
 pythonpath = ["."]
 addopts = "-ra --tb=short"
-# Baselines en tests/__screenshots__ (pytest-playwright / Playwright)

@@ -24,6 +24,8 @@ SESSION_LABELS = {
     "sesion-06": "Sesión 6 · Performance K6",
     "sesion-07": "Sesión 7 · Seguridad ZAP + Axe",
     "sesion-08": "Sesión 8 · Mantenimiento y Mutación",
+    "sesion-09": "Sesión 9 · Móvil y Regresión Visual",
+    "sesion-10": "Sesión 10 · Release Gate · Cierre",
 }
 
 
@@ -174,12 +176,27 @@ def main() -> None:
     parser.add_argument(
         "session",
         nargs="?",
-        choices=["sesion-05", "sesion-06", "sesion-07", "sesion-08", "all"],
+        choices=[
+            "sesion-05",
+            "sesion-06",
+            "sesion-07",
+            "sesion-08",
+            "sesion-09",
+            "sesion-10",
+            "all",
+        ],
         default="all",
     )
     args = parser.parse_args()
     names = (
-        ["sesion-05", "sesion-06", "sesion-07", "sesion-08"]
+        [
+            "sesion-05",
+            "sesion-06",
+            "sesion-07",
+            "sesion-08",
+            "sesion-09",
+            "sesion-10",
+        ]
         if args.session == "all"
         else [args.session]
     )
